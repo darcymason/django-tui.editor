@@ -1,13 +1,66 @@
 {% include "django/forms/widgets/textarea.html" %}
 {% with 'editor-'|add:widget.attrs.id as editorid %}
-<div id="{{ editorid }}"></div>
-<script type="text/javascript">
-  if (window.django_tuieditor) {
-    django_tuieditor.initEditor("#{{ widget.attrs.id }}", "#{{ editorid }}");
-  } else {
-    window.addEventListener("load", function () {
-      django_tuieditor.initEditor("#{{ widget.attrs.id }}", "#{{ editorid }}");
+{% comment %} <div id="{{ editorid }}"></div> {% endcomment %}
+
+<div><div id="editor"></div></div>
+
+<script language="javascript" type="text/javascript">
+    function chkform() {
+    
+    // if (autoSaveTimer != null)
+    // clearTimeout(autoSaveTimer);
+    // submitted = true;
+    alert("chkform start");
+    alert("getMarkdown...:" + editor.getMarkdown());
+    document.getElementById("id_text").value = editor.getMarkdown();
+    alert("chkform text: " + document.getElementById("id_text").value);
+
+    
+    return true;
+    }
+    </script>
+
+
+
+<script language="javascript" type="text/javascript">
+function latexPlugin() {
+    const toHTMLRenderers = {
+        latex(node) {
+            const html = katex.renderToString(node.literal);
+
+            return [
+                { type: 'openTag', tagName: 'div', outerNewLine: true },
+                { type: 'html', content: html },
+                { type: 'closeTag', tagName: 'div', outerNewLine: true }
+            ];
+        }
+    }
+    return { toHTMLRenderers };
+}
+
+    const { Editor } = toastui;
+    const { chart, codeSyntaxHighlight, colorSyntax, tableMergedCell } = Editor.plugin;
+
+    const editor = new Editor({
+        el: document.querySelector('#editor'),
+        previewStyle: 'vertical',
+        height: '500px',
+        initialValue: '',
+        usageStatistics: false,
+        mathSupport: true,
+        placeHolder: 'Enter your text',
+        autofocus: false,
+        plugins: [[chart, {maxWidth:750, maxHeight:500}], [codeSyntaxHighlight, {highlighter: Prism}], colorSyntax, tableMergedCell, latexPlugin],
     });
-  }
+
+
+
+function body_onload() {            
+
+    var text = document.getElementById("id_text").value;
+    editor.setMarkdown(text);
+    alert("onload...: setting text...: " + text);
+    return true;
+}
 </script>
 {% endwith %}
