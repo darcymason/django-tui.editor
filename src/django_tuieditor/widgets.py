@@ -25,6 +25,8 @@ common_js = (
     "https://uicdn.toast.com/editor-plugin-table-merged-cell/latest/toastui-editor-plugin-table-merged-cell.min.js",
     "https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js",    
 )
+
+
 class MarkdownEditorWidget(forms.Textarea):
     template_name = 'django_tuieditor/editor.html'
 
