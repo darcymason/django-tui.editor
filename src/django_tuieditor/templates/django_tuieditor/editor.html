@@ -9,7 +9,7 @@
     // if (autoSaveTimer != null)
     // clearTimeout(autoSaveTimer);
     // submitted = true;
-    document.getElementById("{{ widgets.attrs.id }}").value = editor.getMarkdown();
+    document.getElementById("{{ widget.attrs.id }}").value = editor.getMarkdown();
     
     return true;
     }
