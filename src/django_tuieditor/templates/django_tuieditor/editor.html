@@ -52,7 +52,7 @@ function latexPlugin() {
 
 function body_onload() {            
 
-    var text = document.getElementById("{{ widgets.attrs.id }}").value;
+    var text = document.getElementById("{{ widget.attrs.id }}").value;
     editor.setMarkdown(text);
     return true;
 }
